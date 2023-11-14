@@ -67,9 +67,6 @@ scene.add(plane);
 
 objetos.push(plane);
 //movimiento camara
-const posicion = { x: 500, y: 800, z: 1100, w: 1 };
-const rotacion = new THREE.Quaternion();
-const movimiento = new XRRigidTransform( posicion,rotacion );
 
 let isShiftDown = false;
 //
@@ -89,7 +86,7 @@ renderer.xr.addEventListener('sessionstart', (e) => {
 
     const offsetRotation = camera.quaternion;
 
-    const transform = new XRRigidTransform( offsetPosition, { x: offsetRotation.x, y: -(offsetRotation.y), z: offsetRotation.z, w: offsetRotation.w } ); 
+    const transform = new XRRigidTransform( offsetPosition, { x: offsetRotation.x, y: offsetRotation.y, z: offsetRotation.z, w: offsetRotation.w } ); 
     const teleportSpaceOffset = baseReferenceSpace.getOffsetReferenceSpace( transform );
 
     renderer.xr.setReferenceSpace( teleportSpaceOffset );
