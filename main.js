@@ -63,11 +63,14 @@ let pointer = new THREE.Vector2();
 
 const geometry = new THREE.PlaneGeometry(1000, 1000);
 geometry.rotateX(- Math.PI / 2);
-
 const plane = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ visible: false }));
 scene.add(plane);
 
 objetos.push(plane);
+//movimiento camara
+const posicion = { x: 500, y: 800, z: 1100, w: 1 };
+const rotacion = new THREE.Quaternion();
+const movimiento = new XRRigidTransform( posicion,rotacion );
 
 let isShiftDown = false;
 //
