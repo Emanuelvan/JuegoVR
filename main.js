@@ -21,8 +21,8 @@ let controls, fondo;
 const objetos = [];
 
 //Camara
-camera.position.set(0, 500, 0);
-camera.lookAt(0, 0, 0);
+camera.position.set(200, 500, 200);
+camera.updateProjectionMatrix();
 //hdr
 
 fondo = new RGBELoader()
