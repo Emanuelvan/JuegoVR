@@ -15,7 +15,6 @@ THREE.ColorManagement.enabled = true;
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 2;
-renderer.xr.setReferenceSpace( 500,500 );
 
 let controls, fondo;
 const objetos = [];
@@ -79,6 +78,23 @@ document.addEventListener('pointerdown', onPointerDown);
 document.addEventListener('keydown', onDocumentKeyDown);
 document.addEventListener('keyup', onDocumentKeyUp);
 
+renderer.xr.addEventListener('sessionstart', (e) => {
+
+    controls.update();
+
+    const baseReferenceSpace = renderer.xr.getReferenceSpace();
+    
+    const offsetPosition = camera.position;
+
+
+    const offsetRotation = camera.quaternion;
+
+    const transform = new XRRigidTransform( offsetPosition, { x: offsetRotation.x, y: -(offsetRotation.y), z: offsetRotation.z, w: offsetRotation.w } ); 
+    const teleportSpaceOffset = baseReferenceSpace.getOffsetReferenceSpace( transform );
+
+    renderer.xr.setReferenceSpace( teleportSpaceOffset );
+
+});
 
 
 
