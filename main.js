@@ -21,7 +21,6 @@ const objetos = [];
 
 //Camara
 camera.position.set(200, 500, 200);
-camera.updateProjectionMatrix();
 //hdr
 
 fondo = new RGBELoader()
@@ -81,24 +80,27 @@ renderer.xr.addEventListener('sessionstart', (e) => {
 
     const baseReferenceSpace = renderer.xr.getReferenceSpace();
     
-    const offsetPosition = camera.position;
+    const cambioPosicion = camera.position;
 
 
-    const offsetRotation = camera.quaternion;
+    const cambioRotacion = camera.quaternion;
 
-    const transform = new XRRigidTransform( offsetPosition, { x: offsetRotation.x, y: offsetRotation.y, z: offsetRotation.z, w: offsetRotation.w } ); 
+    const transform = new XRRigidTransform( cambioPosicion, { x: cambioRotacion.x, y: cambioRotacion.y, z: cambioRotacion.z, w: cambioRotacion.w } ); 
     const teleportSpaceOffset = baseReferenceSpace.getOffsetReferenceSpace( transform );
 
     renderer.xr.setReferenceSpace( teleportSpaceOffset );
+   
+
 
 });
-
-
+const test = camera.quaternion;
+console.log(test)
 
 function onPointerMove(event) {
 
     pointer.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1);
-    raycaster.setFromCamera(pointer, camera);
+    //raycaster.setFromCamera(pointer, camera);
+    raycaster.set(camera.position, new THREE.Vector3(1,0,0).applyEuler(camera.rotation));
     const intersects = raycaster.intersectObjects(objetos, false);
 
     if (intersects.length > 0) {
@@ -140,6 +142,7 @@ function onDocumentKeyDown(event) {
     switch (event.keyCode) {
         case 16: isShiftDown = true; break;
     }
+
 }
 
 function onDocumentKeyUp(event) {
@@ -147,6 +150,9 @@ function onDocumentKeyUp(event) {
         case 16: isShiftDown = false; break;
     }
 
+    if(event.keyCode == 38){
+        camera.position.y = camera.position.y + 5
+    }
 }
 
 function animate() {
