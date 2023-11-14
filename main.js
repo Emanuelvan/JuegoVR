@@ -40,7 +40,7 @@ controls = new OrbitControls(camera, renderer.domElement);
 
 
 //Cubo
-const textura = new THREE.TextureLoader().load('Assets/Texturas/Cubo.png')
+const textura = new THREE.TextureLoader().load('Assets/Texturas/cubo.png')
 //const textura_normal = new THREE.TextureLoader().load('Assets/Texturascubo_normal.png')
 const textura_roughness = new THREE.TextureLoader().load('Assets/Texturas/cubo_roughnees.png')
 textura.colorSpace = THREE.SRGBColorSpace;
