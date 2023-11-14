@@ -113,7 +113,8 @@ function onPointerMove(event) {
 function onPointerDown(event) {
 
     pointer.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1);
-    raycaster.setFromCamera(pointer, camera);
+    //raycaster.setFromCamera(pointer, camera);
+    raycaster.set(camera.position, new THREE.Vector3(1,0,0).applyEuler(camera.rotation));
     const intersects = raycaster.intersectObjects(objetos, false);
 
     if (intersects.length > 0) {
@@ -124,7 +125,7 @@ function onPointerDown(event) {
                 scene.remove(intersect.object);
                 objetos.splice(objetos.indexOf(intersect.object), 1);
             }
-            // create cube
+        // create cube
         } else {
             const PonerCubo = new THREE.Mesh(geoCubo, material);
             PonerCubo.position.copy(intersect.point).add(intersect.face.normal);
@@ -137,6 +138,12 @@ function onPointerDown(event) {
     }
 
 }
+
+// const arrowHelper = new THREE.ArrowHelper( camera.rotation, camera.position, 200, 0xcfbdd9 );
+const arrowHelper = new THREE.ArrowHelper( new THREE.Vector3(1,0,0).applyEuler(camera.rotation), camera.position, 200, 0xff000);
+// const arrowHelper = new THREE.ArrowHelper( new THREE.Vector3(1,0,0), new THREE.Vector3(0,0,0), 200, 0xff000 );
+
+scene.add( arrowHelper );
 
 function onDocumentKeyDown(event) {
     switch (event.keyCode) {
@@ -159,6 +166,10 @@ function animate() {
     renderer.setAnimationLoop(animate);
     controls.update()
     renderer.render(scene, camera);
+     arrowHelper.setDirection(camera.rotation);
+    // arrowHelper.position.copy(camera.position);
+
+
 }
 
 
